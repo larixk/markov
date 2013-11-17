@@ -1,0 +1,129 @@
+@font-face {
+	font-family: 'FoundryGridnikLight';
+	src:	url('http://larixk.nl/css/foundrygridnik-light-webfont.eot');
+	src:	url('http://larixk.nl/css/foundrygridnik-light-webfont.eot?#iefix')				 format('embedded-opentype'),
+			url('http://larixk.nl/css/foundrygridnik-light-webfont.woff')					 format('woff'),
+			url('http://larixk.nl/css/foundrygridnik-light-webfont.ttf')					 format('truetype'),
+			url('http://larixk.nl/css/foundrygridnik-light-webfont.svg#FoundryGridnikLight') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+html {
+	padding: 0;
+	margin: 0;
+	font: 16px FoundryGridnikLight, monospace;
+	overflow: auto;
+	min-height: 100%;
+}
+body {
+	margin: 0;
+	padding: 20px;
+	background-image: linear-gradient(22deg, #fff 0%, #ddd 40%,  #fff 80%);
+	min-height: 100%;
+}
+.photo {
+	padding: 40px 20px;
+	display: block;
+}
+canvas {
+	border: 16px solid #fafafa;
+	box-shadow:
+		0 0 60px rgba(0,0,0,0.05),
+		0 10px 30px rgba(0,0,0,0.05);
+	z-index: 10;
+	cursor:pointer;
+	transition: box-shadow 1s;
+	display: block;
+	margin: 0 auto;
+}
+canvas:hover {
+	transition: box-shadow 0.25s;
+	box-shadow:
+		0 0px 15px rgba(0,0,0,0.1),
+		0 0px 7px rgba(0,0,0,0.1);
+}
+h1, h1 a, p, p a {
+	color: #bbb;
+	font-weight: normal;
+	transition: color 0.5s, background 1s;
+	margin: 0;
+	padding: 0;
+}
+h1 {
+	text-transform: uppercase;
+	margin: 16px 16px 2%;
+	font-size: 40px;
+	letter-spacing: 6px;
+}
+strong {
+	font-weight: normal;
+	color: #333;
+}
+p {
+	margin: 8px 16px 12px;
+	font-size: 24px;
+}
+a {
+	text-decoration: none;
+	border-bottom: 1px dotted #ccc;
+	cursor: pointer;
+}
+.intro {
+	padding: 2% 2%;
+}
+.intro:hover p,
+.intro:hover h1 {
+	color: #666;
+}
+.intro:hover a {
+	color: #333;;
+}
+.intro a:hover {
+	color: #ddd;
+}
+.license {
+	font-size: 16px;
+	color: #ddd;
+}
+.thumb {
+	display: none;
+}
+.github {
+	transition: all 0.25s;
+	opacity: 0.3;
+}
+.github:hover {
+	opacity: 1;
+}
+@-webkit-keyframes blink
+{
+	0% {
+		background: rgba(0,0,0,0.125);
+	}
+	100% {
+	background: rgba(0,0,0,0.5);
+	}
+}
+#busy {
+	width: 1em;
+	height: 1em;
+	display: inline-block;
+	vertical-align:middle;
+	margin-top:-0.5em;
+	direction: ltr;
+	text-indent: -999px;
+	font-size: 0.25em;
+	overflow: hidden;
+	content: "";
+	-webkit-transition: all 0.5s;
+	background: rgba(0,0,0,0.05);
+	-webkit-transform:rotate(45deg);
+}
+#busy.running {
+	background: rgba(0,0,0,0.5);
+	-webkit-animation: blink 0.5s;
+	-webkit-animation-iteration-count: infinite;
+}
+.hidden {
+	display: none;
+}
