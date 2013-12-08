@@ -19,6 +19,7 @@ body {
 	margin: 0;
 	padding: 20px;
 	background-image: linear-gradient(22deg, #fff 0%, #ddd 40%,  #fff 80%);
+	background-attachment: fixed;
 	min-height: 100%;
 }
 .photo {

@@ -20,7 +20,7 @@ function Markov(data, config) {
     function processPixel(pixel, width, height) {
         var x = pixel.x,
             y = pixel.y,
-            index = (y * config.srcSize + x) * 4,
+            index = (y * config.srcWidth + x) * 4,
             pixelRGB = {
                 r: round(data[index]),
                 g: round(data[index + 1]),
@@ -52,10 +52,9 @@ function Markov(data, config) {
         }
     }
     function create() {
-        var width = config.srcSize,
-            height = config.srcSize,
+        var width = config.srcWidth,
+            height = config.srcHeight,
             x, y;
-
         for (y = 0; y < height; y += 1) {
             for (x = 0; x < width; x += 1) {
                 processPixel({x: x, y: y}, width, height);

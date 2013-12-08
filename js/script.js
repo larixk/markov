@@ -1,4 +1,4 @@
-/* global jQuery, dat */
+/* global jQuery, dat, Front, Markov */
 
 (function ($, container) {
     'use strict';
@@ -27,11 +27,13 @@
 
         config = {
             colorCompression: 1,
-            speed: 100,
+            speed: 500,
             depthFirst:  0.99,
             width: 800,
             height: 600,
             srcSize: 256,
+            startX: 0.5,
+            startY: 0.5,
             restart: function() {
                 try {
                     restart();
@@ -114,7 +116,6 @@
 
     // We are done for now
     function stop() {
-        console.log('Execution time: ' + (new Date().getTime() - startTime));
         running = false;
     }
 
@@ -126,7 +127,10 @@
         drawing = true;
 
         front.add({
-            pixel: {x: Math.round(width / 2), y: Math.round(height / 2)},
+            pixel: {
+                x: Math.min(width - 1, Math.round(width * config.startX)),
+                y: Math.min(height - 1, Math.round(height * config.startY))
+            },
             color: markov.getRandomColor()
         });
         loop();
@@ -177,21 +181,28 @@
         reset();
 
         // Get the image data by painting it to a canvas
+        var srcWidth = Math.min(config.srcSize, img.width);
+        var srcHeight = Math.min(config.srcSize, img.height);
+
         $srcCanvas = $('<canvas style="display: none" />')
-            .css('width', config.srcSize)
-            .css('height', config.srcSize)
-            .attr('width', config.srcSize)
-            .attr('height', config.srcSize);
+            .css('width', srcWidth)
+            .css('height', srcHeight)
+            .attr('width', srcWidth)
+            .attr('height', srcHeight);
         $container.append($srcCanvas);
 
         srcCtx = $srcCanvas[0].getContext('2d');
-        srcCtx.drawImage(img, 0, 0, config.srcSize, config.srcSize);
+        srcCtx.drawImage(img, 0, 0, srcWidth, srcHeight);
         srcData = srcCtx
-            .getImageData(0, 0, config.srcSize, config.srcSize)
+            .getImageData(0, 0, srcWidth, srcHeight)
             .data;
 
         // Create a 2d markov chain
-        markov = new Markov(srcData, config);
+        markov = new Markov(srcData, {
+            srcHeight: srcHeight,
+            srcWidth: srcWidth,
+            colorCompression: config.colorCompression
+        });
 
         // Clean up
         $srcCanvas.remove();
@@ -251,6 +262,10 @@
         gui.add(config, 'height', 16, 1080)
             .step(1)
             .onFinishChange(restart);
+        gui.add(config, 'startX', 0, 1)
+            .step(0.01);
+        gui.add(config, 'startY', 0, 1)
+            .step(0.01);
 
         $('#controls').on('click', function () {
             gui.open();
@@ -269,7 +284,7 @@
         // Allow dropping files
         initFileDrop($('html'));
 
-        // On resize: reload(). Now: reload()
+        // Now: reload()
         reload();
     }
 
